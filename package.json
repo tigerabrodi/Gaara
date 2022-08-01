@@ -11,6 +11,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/tailwindcss": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "autoprefixer": "^10.4.7",
     "eslint": "^8.20.0",
