@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .grid-template-area-styles {
+    grid-template-areas: 'img textarea textarea textarea' 'img media-buttons buttons action-buttons';
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 15% 27% 29% 27%;
+  }
+}
+
 @layer base {
   *,
   *::after,
@@ -9,9 +18,14 @@
     margin: 0;
     padding: 0;
     box-sizing: inherit;
+    font-family: 'Roboto', sans-serif;
   }
 
   html {
+    height: 100%;
+  }
+
+  #root {
     height: 100%;
   }
 
