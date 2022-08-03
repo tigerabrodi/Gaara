@@ -7,7 +7,7 @@
     grid-template-areas: 'img textarea textarea textarea' 'img media-buttons buttons action-buttons';
     display: grid;
     justify-items: center;
-    grid-template-columns: 15% 27% 29% 27%;
+    grid-template-columns: 11% 28% 31% 28%;
   }
 }
 
@@ -34,11 +34,12 @@
     height: 100%;
   }
 
-  input {
+  textarea {
     border: none;
   }
 
-  input:focus {
+  textarea:focus,
+  textarea:focus-visible {
     outline: none;
   }
 }
