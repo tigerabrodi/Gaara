@@ -34,12 +34,17 @@
     height: 100%;
   }
 
-  textarea {
-    border: none;
+  textarea:focus,
+  textarea:focus-visible,
+  span:focus,
+  span:focus-visible {
+    outline: none;
   }
 
-  textarea:focus,
-  textarea:focus-visible {
-    outline: none;
+  [contenteditable][placeholder]:empty:before {
+    content: attr(placeholder);
+    pointer-events: none;
+    display: block; /* For Firefox */
+    opacity: 0.5;
   }
 }

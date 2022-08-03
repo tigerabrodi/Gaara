@@ -23,12 +23,28 @@ export const App = () => {
     START_STROKE_DASH_ARRAY
   )
 
-  createEffect(() => {
-    const currentTweetValueLength = tweetValue().length
+  function placeCaretAfterNode(spanTextareaNode: HTMLSpanElement) {
+    const range = document.createRange()
+    range.setStartAfter(spanTextareaNode)
+    range.collapse(true)
+    const selection = window.getSelection()
+    selection.removeAllRanges()
+    selection.addRange(range)
 
-    if (tweetValue() && currentTweetValueLength <= MAX_CHARACTERS) {
+    console.log({ selection, range })
+  }
+
+  createEffect(() => {
+    if (tweetValue()) {
+      setTimeout(() => {
+        placeCaretAfterNode(spanTextareaRef)
+      }, 300)
+      spanTextareaRef.focus()
+    }
+
+    if (tweetValue() && tweetValue().length <= MAX_CHARACTERS) {
       const newStrokeDashArrayPerCharacter =
-        currentTweetValueLength * INCREMENTAL_STROKE_VALUE_PER_CHARACTER
+        tweetValue().length * INCREMENTAL_STROKE_VALUE_PER_CHARACTER
 
       const newStrokeDashArray =
         newStrokeDashArrayPerCharacter + START_STROKE_DASH_ARRAY
@@ -37,24 +53,36 @@ export const App = () => {
     }
   })
 
+  let spanTextareaRef: HTMLSpanElement
+
   return (
     <main class="w-full min-h-full flex flex-col items-center bg-white">
       <h1 class="mt-12 text-navy text-6xl">Tweet UI</h1>
-      <div class="bg-navy w-[600px] min-h-[280px] p-4 pt-5 rounded-xl shadow-sm shadow-gray-600 mt-8">
-        <div class="grid-template-area-styles h-[250px]">
+      <div class="bg-navy w-[600px] min-h-[265px] pb-1 px-4 pt-5 rounded-xl shadow-sm shadow-gray-600 mt-8">
+        <div class="grid-template-area-styles min-h-[230px]">
           <img
             src="/src/assets/naruto.jpg"
             alt="Naruto"
             class="[grid-area:img] rounded-full object-top object-cover w-12 h-12"
           />
-          <textarea
-            class="[grid-area:textarea] bg-navy text-xl text-white placeholder:text-opacity-50 min-h-[180px] w-full pt-[10px] pl-2 resize-none border-b-gray-600 border-b"
+          <span
+            role="textbox"
+            contenteditable
+            class="[grid-area:textarea] bg-navy text-xl text-white min-h-[180px] w-full pt-[10px] pl-2 resize-none border-b-gray-600 border-b"
+            // @ts-ignore
             placeholder="What's happening?"
-            value={tweetValue()}
-            onInput={(event) =>
-              setTweetValue((event.target as HTMLInputElement).value)
-            }
-          />
+            ref={spanTextareaRef}
+            onInput={(event) => {
+              console.log(event)
+              if (event.data) {
+                setTweetValue(event.target.textContent)
+              }
+              spanTextareaRef.click()
+              spanTextareaRef.focus()
+            }}
+          >
+            {tweetValue()}
+          </span>
 
           <div class="[grid-area:media-buttons] flex flex-row items-center [column-gap:16px] mt-1 h-full w-full">
             <button
