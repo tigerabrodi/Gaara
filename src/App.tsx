@@ -5,11 +5,42 @@ import { GifIcon } from './icons/GifIcon'
 import { ImageIcon } from './icons/ImageIcon'
 import { ProgressCircleIcon } from './icons/ProgressCircleIcon'
 
+const MAX_CHARACTERS = 280
+
+const START_STROKE_DASH_ARRAY = 56.5487
+
+const END_STROKE_DASH_ARRAY = 111
+
+const TOTAL_STROKE_DASH_ARRAY_DURATION =
+  END_STROKE_DASH_ARRAY - START_STROKE_DASH_ARRAY
+
+const INCREMENTAL_STROKE_VALUE_PER_CHARACTER =
+  TOTAL_STROKE_DASH_ARRAY_DURATION / MAX_CHARACTERS
+
 export const App = () => {
+  const [tweetValue, setTweetValue] = createSignal('')
+  const [strokeDashArray, setStrokeDashArray] = createSignal(
+    START_STROKE_DASH_ARRAY
+  )
+
+  createEffect(() => {
+    const currentTweetValueLength = tweetValue().length
+
+    if (tweetValue() && currentTweetValueLength <= MAX_CHARACTERS) {
+      const newStrokeDashArrayPerCharacter =
+        currentTweetValueLength * INCREMENTAL_STROKE_VALUE_PER_CHARACTER
+
+      const newStrokeDashArray =
+        newStrokeDashArrayPerCharacter + START_STROKE_DASH_ARRAY
+
+      setStrokeDashArray(newStrokeDashArray)
+    }
+  })
+
   return (
     <main class="w-full min-h-full flex flex-col items-center bg-white">
       <h1 class="mt-12 text-navy text-6xl">Tweet UI</h1>
-      <div class="bg-navy w-[600px] min-h-[280px] p-4 rounded-xl shadow-sm shadow-gray-600 mt-8">
+      <div class="bg-navy w-[600px] min-h-[280px] p-4 pt-5 rounded-xl shadow-sm shadow-gray-600 mt-8">
         <div class="grid-template-area-styles h-[250px]">
           <img
             src="/src/assets/naruto.jpg"
@@ -19,6 +50,10 @@ export const App = () => {
           <textarea
             class="[grid-area:textarea] bg-navy text-xl text-white placeholder:text-opacity-50 min-h-[180px] w-full pt-[10px] pl-2 resize-none border-b-gray-600 border-b"
             placeholder="What's happening?"
+            value={tweetValue()}
+            onInput={(event) =>
+              setTweetValue((event.target as HTMLInputElement).value)
+            }
           />
 
           <div class="[grid-area:media-buttons] flex flex-row items-center [column-gap:16px] mt-1 h-full w-full">
@@ -43,7 +78,14 @@ export const App = () => {
           </div>
 
           <div class="[grid-area:action-buttons] flex flex-row items-center mt-1 h-full w-full justify-between">
-            <ProgressCircleIcon class="w-5 h-5 -rotate-90" />
+            {tweetValue() ? (
+              <ProgressCircleIcon
+                class="w-5 h-5 -rotate-90"
+                strokeDashArray={strokeDashArray()}
+              />
+            ) : (
+              <div class="w-5 h-5" />
+            )}
             <div class="h-3/5 w-[1px] bg-gray-600"></div>
             <button
               class="rounded-full p-1 border border-gray-600"
