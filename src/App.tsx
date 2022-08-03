@@ -48,7 +48,7 @@ export const App = () => {
             class="[grid-area:img] rounded-full object-top object-cover w-12 h-12"
           />
           <textarea
-            class="[grid-area:textarea] bg-navy text-xl text-white placeholder:text-opacity-50 min-h-[180px] w-full pt-[10px] pl-2 resize-none border-b-gray-600 border-b"
+            class="[grid-area:textarea] bg-navy text-xl text-white placeholder:text-opacity-50 min-h-[180px] w-full pt-[10px] pl-2 pr-1 resize-none border-b-gray-600 border-b overflow-auto"
             placeholder="What's happening?"
             value={tweetValue()}
             onInput={(event) =>
