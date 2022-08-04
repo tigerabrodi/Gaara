@@ -5,7 +5,7 @@ import { GifIcon } from './icons/GifIcon'
 import { ImageIcon } from './icons/ImageIcon'
 import { ProgressCircleIcon } from './icons/ProgressCircleIcon'
 
-const MAX_CHARACTERS = 280
+export const MAX_CHARACTERS_LENGTH = 280
 
 const START_STROKE_DASH_ARRAY = 56.5487
 
@@ -15,7 +15,7 @@ const TOTAL_STROKE_DASH_ARRAY_DURATION =
   END_STROKE_DASH_ARRAY - START_STROKE_DASH_ARRAY
 
 const INCREMENTAL_STROKE_VALUE_PER_CHARACTER =
-  TOTAL_STROKE_DASH_ARRAY_DURATION / MAX_CHARACTERS
+  TOTAL_STROKE_DASH_ARRAY_DURATION / MAX_CHARACTERS_LENGTH
 
 export const App = () => {
   const [tweetValue, setTweetValue] = createSignal('')
@@ -25,8 +25,10 @@ export const App = () => {
 
   createEffect(() => {
     const currentTweetValueLength = tweetValue().length
+    const isTweetLessThanMaxCharacters =
+      currentTweetValueLength <= MAX_CHARACTERS_LENGTH
 
-    if (tweetValue() && currentTweetValueLength <= MAX_CHARACTERS) {
+    if (tweetValue() && isTweetLessThanMaxCharacters) {
       const newStrokeDashArrayPerCharacter =
         currentTweetValueLength * INCREMENTAL_STROKE_VALUE_PER_CHARACTER
 
@@ -82,6 +84,7 @@ export const App = () => {
               <ProgressCircleIcon
                 class="w-5 h-5 -rotate-90"
                 strokeDashArray={strokeDashArray()}
+                tweetValue={tweetValue()}
               />
             ) : (
               <div class="w-5 h-5" />
