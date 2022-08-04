@@ -7,9 +7,9 @@ import {
   STROKE_SUCCESS_COLOR,
   STROKE_WARNING_COLOR,
   MAX_TWEET_SUCCESS_CHARACTERS_LENGTH,
-  END_STROKE_DASH_ARRAY,
   START_STROKE_DASH_ARRAY,
   INCREMENTAL_STROKE_VALUE_PER_CHARACTER,
+  ERROR_STROKE_DASH_ARRAY,
 } from '../constants'
 
 export const ProgressCircle = (props: { tweetValue: string }) => {
@@ -33,7 +33,7 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
       : STROKE_ERROR_COLOR
 
   const currentStrokeDashArray = () =>
-    shouldShowErrorColor() ? END_STROKE_DASH_ARRAY : strokeDashArray()
+    shouldShowErrorColor() ? ERROR_STROKE_DASH_ARRAY : strokeDashArray()
 
   createEffect(() => {
     const currentTweetValueLength = props.tweetValue.length
@@ -59,12 +59,20 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
   const warningErrorText = () =>
     MAX_TOTAL_TWEET_CHARACTERS_LENGTH - props.tweetValue.length
 
+  const displayOfNumberValidation = () =>
+    props.tweetValue.length >= MAX_TWEET_SUCCESS_CHARACTERS_LENGTH
+      ? 'block'
+      : 'hidden'
+
+  const strokeWidth = () =>
+    shouldShowErrorColor() || shouldShowWarningColor() ? '1.5' : '2'
+
   return (
     <div class="relative">
       <svg
         viewBox="0 0 20 20"
         style="overflow: visible;"
-        class={`${iconSize()} -rotate-90`}
+        class={`${iconSize()} -rotate-90 transition-all`}
       >
         <circle
           cx="50%"
@@ -78,7 +86,7 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
           cx="50%"
           cy="50%"
           fill="none"
-          stroke-width="2"
+          stroke-width={strokeWidth()}
           r="9"
           stroke={strokeColor()}
           stroke-linecap="round"
@@ -87,11 +95,7 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
       </svg>
       <p
         aria-hidden="true"
-        class={`${
-          props.tweetValue.length >= MAX_TWEET_SUCCESS_CHARACTERS_LENGTH
-            ? 'block'
-            : 'hidden'
-        } text-gray-300 font-medium absolute text-sm -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2`}
+        class={`${displayOfNumberValidation()} text-gray-300 font-medium absolute text-sm -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2`}
       >
         {warningErrorText()}
       </p>
