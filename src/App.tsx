@@ -3,7 +3,7 @@ import { AddIcon } from './icons/AddIcon'
 import { EmojiIcon } from './icons/EmojiIcon'
 import { GifIcon } from './icons/GifIcon'
 import { ImageIcon } from './icons/ImageIcon'
-import { ProgressCircle } from './icons/ProgressCircleIcon'
+import { ProgressCircle } from './components/ProgressCircle'
 
 export const App = () => {
   const [tweetValue, setTweetValue] = createSignal('')
