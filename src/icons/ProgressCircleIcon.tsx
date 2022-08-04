@@ -12,10 +12,7 @@ import {
   INCREMENTAL_STROKE_VALUE_PER_CHARACTER,
 } from '../constants'
 
-export const ProgressCircleIcon = (props: {
-  class: string
-  tweetValue: string
-}) => {
+export const ProgressCircle = (props: { tweetValue: string }) => {
   const [strokeDashArray, setStrokeDashArray] = createSignal(
     START_STROKE_DASH_ARRAY
   )
@@ -60,7 +57,7 @@ export const ProgressCircleIcon = (props: {
       viewBox="0 0 20 20"
       width="100%"
       style="overflow: visible;"
-      class={props.class}
+      class="w-5 h-5 -rotate-90"
     >
       <circle
         cx="50%"

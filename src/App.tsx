@@ -3,7 +3,7 @@ import { AddIcon } from './icons/AddIcon'
 import { EmojiIcon } from './icons/EmojiIcon'
 import { GifIcon } from './icons/GifIcon'
 import { ImageIcon } from './icons/ImageIcon'
-import { ProgressCircleIcon } from './icons/ProgressCircleIcon'
+import { ProgressCircle } from './icons/ProgressCircleIcon'
 
 export const App = () => {
   const [tweetValue, setTweetValue] = createSignal('')
@@ -50,10 +50,7 @@ export const App = () => {
 
           <div class="[grid-area:action-buttons] flex flex-row items-center mt-1 h-full w-full justify-between">
             {tweetValue() ? (
-              <ProgressCircleIcon
-                class="w-5 h-5 -rotate-90"
-                tweetValue={tweetValue()}
-              />
+              <ProgressCircle tweetValue={tweetValue()} />
             ) : (
               <div class="w-5 h-5" />
             )}
