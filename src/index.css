@@ -35,7 +35,6 @@
   }
 
   textarea {
-    border: none;
     scrollbar-width: thin;
     scrollbar-color: rgba(21, 32, 43, 1) rgb(66, 83, 100);
   }
