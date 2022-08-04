@@ -15,6 +15,16 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
   const [strokeDashArray, setStrokeDashArray] = createSignal(
     START_STROKE_DASH_ARRAY
   )
+  const [ariaProgressValueNow, setAriaProgressValueNow] = createSignal(0)
+
+  const setNewProgressValue = () => {
+    const currentTweetLength = props.tweetValue.length
+    const onePercentOfProgress = MAX_TOTAL_TWEET_CHARACTERS_LENGTH / 100
+    const currentPercent = currentTweetLength / onePercentOfProgress
+
+    // We've to check whether `currentPercent` is above 100 because if you paste text into the textarea, it'll increase as an amount text together.
+    return setAriaProgressValueNow(currentPercent > 100 ? 100 : currentPercent)
+  }
 
   const shouldShowSuccessColor = () =>
     props.tweetValue.length < MAX_TWEET_SUCCESS_CHARACTERS_LENGTH
@@ -50,6 +60,12 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
     }
   })
 
+  createEffect(() => {
+    if (ariaProgressValueNow() <= 100) {
+      setNewProgressValue()
+    }
+  })
+
   const iconSize = () =>
     shouldShowWarningColor() || shouldShowErrorColor()
       ? `w-[35px] h-[35px]`
@@ -80,6 +96,12 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
       >
         {warningErrorText()}
       </p>
+      <div
+        role="progressbar"
+        aria-valuemax="100"
+        aria-valuemin="0"
+        aria-valuenow={ariaProgressValueNow()}
+      />
     </div>
   )
 }
