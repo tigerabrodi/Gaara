@@ -4,7 +4,7 @@ import { EmojiIcon } from './icons/EmojiIcon'
 import { GifIcon } from './icons/GifIcon'
 import { ImageIcon } from './icons/ImageIcon'
 import { ProgressCircle } from './components/ProgressCircle'
-import { CloseIcon } from './icons/CloseIcon'
+import { ImageUpload } from './components/ImageUpload'
 
 export const App = () => {
   const [tweetValue, setTweetValue] = createSignal('')
@@ -45,20 +45,10 @@ export const App = () => {
               }
             />
             {avatarUrl() && (
-              <div class="w-full h-96 mt-2 relative">
-                <img
-                  src={avatarUrl()}
-                  alt=""
-                  class="rounded-3xl object-top object-cover w-full h-full"
-                />
-                <button
-                  onClick={() => setAvatarUrl('')}
-                  aria-label="Remove image"
-                  class="w-8 h-8 flex items-center justify-center rounded-full absolute top-2 shadow-md shadow-black-300 left-2 bg-black-600 hover:bg-black-300 transition-all"
-                >
-                  <CloseIcon class="w-4 h-4 fill-white" />
-                </button>
-              </div>
+              <ImageUpload
+                avatarUrl={avatarUrl()}
+                setAvatarUrl={setAvatarUrl}
+              />
             )}
           </div>
 
