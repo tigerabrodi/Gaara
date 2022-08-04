@@ -1,21 +1,14 @@
 import { createEffect, createSignal } from 'solid-js'
+import {
+  INCREMENTAL_STROKE_VALUE_PER_CHARACTER,
+  MAX_CHARACTERS_LENGTH,
+  START_STROKE_DASH_ARRAY,
+} from './constants'
 import { AddIcon } from './icons/AddIcon'
 import { EmojiIcon } from './icons/EmojiIcon'
 import { GifIcon } from './icons/GifIcon'
 import { ImageIcon } from './icons/ImageIcon'
 import { ProgressCircleIcon } from './icons/ProgressCircleIcon'
-
-export const MAX_CHARACTERS_LENGTH = 280
-
-const START_STROKE_DASH_ARRAY = 56.5487
-
-const END_STROKE_DASH_ARRAY = 111
-
-const TOTAL_STROKE_DASH_ARRAY_DURATION =
-  END_STROKE_DASH_ARRAY - START_STROKE_DASH_ARRAY
-
-const INCREMENTAL_STROKE_VALUE_PER_CHARACTER =
-  TOTAL_STROKE_DASH_ARRAY_DURATION / MAX_CHARACTERS_LENGTH
 
 export const App = () => {
   const [tweetValue, setTweetValue] = createSignal('')

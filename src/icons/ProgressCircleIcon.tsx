@@ -1,17 +1,12 @@
-import { createEffect, createSignal, mergeProps } from 'solid-js'
-import { MAX_CHARACTERS_LENGTH } from '../App'
-
-const STROKE_DASH_OFFSET = 56.3467
-
-const STROKE_SUCCESS_COLOR = '#1D9BF0'
-
-const STROKE_WARNING_COLOR = '#FFD400'
-
-const STROKE_ERROR_COLOR = '#F4212E'
-
-const STROKE_BACKGROUND_COLOR = '#38444D'
-
-const SUCCESS_CHARACTERS_LENGTH = 260
+import {
+  MAX_CHARACTERS_LENGTH,
+  STROKE_BACKGROUND_COLOR,
+  STROKE_DASH_OFFSET,
+  STROKE_ERROR_COLOR,
+  STROKE_SUCCESS_COLOR,
+  STROKE_WARNING_COLOR,
+  SUCCESS_CHARACTERS_LENGTH,
+} from '../constants'
 
 export const ProgressCircleIcon = (props: {
   class: string
