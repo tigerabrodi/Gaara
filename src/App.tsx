@@ -1,7 +1,7 @@
 import { createEffect, createSignal } from 'solid-js'
 import {
   INCREMENTAL_STROKE_VALUE_PER_CHARACTER,
-  MAX_CHARACTERS_LENGTH,
+  MAX_TOTAL_TWEET_CHARACTERS_LENGTH,
   START_STROKE_DASH_ARRAY,
 } from './constants'
 import { AddIcon } from './icons/AddIcon'
@@ -19,7 +19,7 @@ export const App = () => {
   createEffect(() => {
     const currentTweetValueLength = tweetValue().length
     const isTweetLessThanMaxCharacters =
-      currentTweetValueLength <= MAX_CHARACTERS_LENGTH
+      currentTweetValueLength <= MAX_TOTAL_TWEET_CHARACTERS_LENGTH
 
     if (tweetValue() && isTweetLessThanMaxCharacters) {
       const newStrokeDashArrayPerCharacter =

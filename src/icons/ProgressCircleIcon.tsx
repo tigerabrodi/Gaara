@@ -1,11 +1,11 @@
 import {
-  MAX_CHARACTERS_LENGTH,
+  MAX_TOTAL_TWEET_CHARACTERS_LENGTH,
   STROKE_BACKGROUND_COLOR,
   STROKE_DASH_OFFSET,
   STROKE_ERROR_COLOR,
   STROKE_SUCCESS_COLOR,
   STROKE_WARNING_COLOR,
-  SUCCESS_CHARACTERS_LENGTH,
+  MAX_TWEET_SUCCESS_CHARACTERS_LENGTH,
 } from '../constants'
 
 export const ProgressCircleIcon = (props: {
@@ -14,9 +14,9 @@ export const ProgressCircleIcon = (props: {
   tweetValue: string
 }) => {
   const shouldShowSuccessColor = () =>
-    props.tweetValue.length < SUCCESS_CHARACTERS_LENGTH
+    props.tweetValue.length < MAX_TWEET_SUCCESS_CHARACTERS_LENGTH
   const shouldShowWarningColor = () =>
-    props.tweetValue.length < MAX_CHARACTERS_LENGTH
+    props.tweetValue.length < MAX_TOTAL_TWEET_CHARACTERS_LENGTH
 
   const strokeColor = () =>
     shouldShowSuccessColor()
