@@ -6,6 +6,7 @@ import {
   STROKE_SUCCESS_COLOR,
   STROKE_WARNING_COLOR,
   MAX_TWEET_SUCCESS_CHARACTERS_LENGTH,
+  END_STROKE_DASH_ARRAY,
 } from '../constants'
 
 export const ProgressCircleIcon = (props: {
@@ -18,12 +19,18 @@ export const ProgressCircleIcon = (props: {
   const shouldShowWarningColor = () =>
     props.tweetValue.length < MAX_TOTAL_TWEET_CHARACTERS_LENGTH
 
+  const shouldShowErrorColor = () =>
+    props.tweetValue.length > MAX_TOTAL_TWEET_CHARACTERS_LENGTH
+
   const strokeColor = () =>
     shouldShowSuccessColor()
       ? STROKE_SUCCESS_COLOR
       : shouldShowWarningColor()
       ? STROKE_WARNING_COLOR
       : STROKE_ERROR_COLOR
+
+  const currentStrokeDashArray = () =>
+    shouldShowErrorColor() ? END_STROKE_DASH_ARRAY : props.strokeDashArray
 
   return (
     <svg
@@ -49,7 +56,7 @@ export const ProgressCircleIcon = (props: {
         r="9"
         stroke={strokeColor()}
         stroke-linecap="round"
-        style={`stroke-dashoffset: ${STROKE_DASH_OFFSET}; stroke-dasharray: ${props.strokeDashArray};`}
+        style={`stroke-dashoffset: ${STROKE_DASH_OFFSET}; stroke-dasharray: ${currentStrokeDashArray()};`}
       ></circle>
     </svg>
   )
