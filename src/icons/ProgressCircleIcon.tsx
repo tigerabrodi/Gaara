@@ -20,10 +20,10 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
   const shouldShowSuccessColor = () =>
     props.tweetValue.length < MAX_TWEET_SUCCESS_CHARACTERS_LENGTH
   const shouldShowWarningColor = () =>
-    props.tweetValue.length < MAX_TOTAL_TWEET_CHARACTERS_LENGTH
-
+    props.tweetValue.length < MAX_TOTAL_TWEET_CHARACTERS_LENGTH &&
+    props.tweetValue.length >= MAX_TWEET_SUCCESS_CHARACTERS_LENGTH
   const shouldShowErrorColor = () =>
-    props.tweetValue.length > MAX_TOTAL_TWEET_CHARACTERS_LENGTH
+    props.tweetValue.length >= MAX_TOTAL_TWEET_CHARACTERS_LENGTH
 
   const strokeColor = () =>
     shouldShowSuccessColor()
@@ -51,32 +51,50 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
     }
   })
 
+  const iconSize = () =>
+    shouldShowWarningColor() || shouldShowErrorColor()
+      ? `w-[35px] h-[35px]`
+      : `w-5 h-5`
+
+  const warningErrorText = () =>
+    MAX_TOTAL_TWEET_CHARACTERS_LENGTH - props.tweetValue.length
+
   return (
-    <svg
-      height="100%"
-      viewBox="0 0 20 20"
-      width="100%"
-      style="overflow: visible;"
-      class="w-5 h-5 -rotate-90"
-    >
-      <circle
-        cx="50%"
-        cy="50%"
-        fill="none"
-        stroke-width="2"
-        r="9"
-        stroke={STROKE_BACKGROUND_COLOR}
-      ></circle>
-      <circle
-        cx="50%"
-        cy="50%"
-        fill="none"
-        stroke-width="2"
-        r="9"
-        stroke={strokeColor()}
-        stroke-linecap="round"
-        style={`stroke-dashoffset: ${STROKE_DASH_OFFSET}; stroke-dasharray: ${currentStrokeDashArray()};`}
-      ></circle>
-    </svg>
+    <div class="relative">
+      <svg
+        viewBox="0 0 20 20"
+        style="overflow: visible;"
+        class={`${iconSize()} -rotate-90`}
+      >
+        <circle
+          cx="50%"
+          cy="50%"
+          fill="none"
+          stroke-width="2"
+          r="9"
+          stroke={STROKE_BACKGROUND_COLOR}
+        ></circle>
+        <circle
+          cx="50%"
+          cy="50%"
+          fill="none"
+          stroke-width="2"
+          r="9"
+          stroke={strokeColor()}
+          stroke-linecap="round"
+          style={`stroke-dashoffset: ${STROKE_DASH_OFFSET}; stroke-dasharray: ${currentStrokeDashArray()};`}
+        ></circle>
+      </svg>
+      <p
+        aria-hidden="true"
+        class={`${
+          props.tweetValue.length >= MAX_TWEET_SUCCESS_CHARACTERS_LENGTH
+            ? 'block'
+            : 'hidden'
+        } text-gray-300 font-medium absolute text-sm -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2`}
+      >
+        {warningErrorText()}
+      </p>
+    </div>
   )
 }
