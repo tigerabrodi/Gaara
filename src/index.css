@@ -4,7 +4,7 @@
 
 @layer utilities {
   .grid-template-area-styles {
-    grid-template-areas: 'img textarea textarea textarea' 'img media-buttons buttons action-buttons';
+    grid-template-areas: 'img text-image text-image text-image' 'img media-buttons buttons action-buttons';
     display: grid;
     justify-items: center;
     grid-template-columns: 11% 28% 31% 28%;

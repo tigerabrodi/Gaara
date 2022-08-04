@@ -18,14 +18,16 @@ export const App = () => {
             alt="Naruto"
             class="[grid-area:img] rounded-full object-top object-cover w-12 h-12"
           />
-          <textarea
-            class="[grid-area:textarea] bg-navy text-xl text-white placeholder:text-opacity-50 min-h-[180px] w-full pt-[10px] pl-2 pr-1 resize-none border-b-gray-600 border-b overflow-auto"
-            placeholder="What's happening?"
-            value={tweetValue()}
-            onInput={(event) =>
-              setTweetValue((event.target as HTMLInputElement).value)
-            }
-          />
+          <div class="[grid-area:text-image] w-full border-b-gray-600 border-b pt-3">
+            <textarea
+              class="bg-navy text-xl text-white placeholder:text-opacity-50 min-h-[180px] w-full pl-2 pr-1 resize-none  overflow-auto"
+              placeholder="What's happening?"
+              value={tweetValue()}
+              onInput={(event) =>
+                setTweetValue((event.target as HTMLInputElement).value)
+              }
+            />
+          </div>
 
           <div class="[grid-area:media-buttons] flex flex-row items-center [column-gap:16px] mt-1 h-full w-full">
             <button
