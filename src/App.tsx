@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js'
+import { createSignal, Show } from 'solid-js'
 import { AddIcon } from './icons/AddIcon'
 import { EmojiIcon } from './icons/EmojiIcon'
 import { GifIcon } from './icons/GifIcon'
@@ -6,16 +6,16 @@ import { ImageIcon } from './icons/ImageIcon'
 import { ProgressCircle } from './components/ProgressCircle'
 import { ImageUpload } from './components/ImageUpload'
 
+type FileInputEvent = Event & {
+  currentTarget: HTMLInputElement
+  target: HTMLInputElement
+}
+
 export const App = () => {
   const [tweetValue, setTweetValue] = createSignal('')
   const [avatarUrl, setAvatarUrl] = createSignal('')
 
-  const onFileChange = (
-    event: Event & {
-      currentTarget: HTMLInputElement
-      target: HTMLInputElement
-    }
-  ) => {
+  const onFileChange = (event: FileInputEvent) => {
     const file = event.target.files ? event.target.files[0] : null
 
     if (!file) {
@@ -44,12 +44,12 @@ export const App = () => {
                 setTweetValue((event.target as HTMLInputElement).value)
               }
             />
-            {avatarUrl() && (
+            <Show when={avatarUrl()}>
               <ImageUpload
                 avatarUrl={avatarUrl()}
                 setAvatarUrl={setAvatarUrl}
               />
-            )}
+            </Show>
           </div>
 
           <div class="[grid-area:media-buttons] flex flex-row items-center [column-gap:16px] mt-1 h-full w-full">
@@ -82,11 +82,9 @@ export const App = () => {
           </div>
 
           <div class="[grid-area:action-buttons] flex flex-row items-center mt-1 h-full w-full justify-between">
-            {tweetValue() ? (
+            <Show when={tweetValue()} fallback={<div class="w-5 h-5" />}>
               <ProgressCircle tweetValue={tweetValue()} />
-            ) : (
-              <div class="w-5 h-5" />
-            )}
+            </Show>
             <div class="h-3/5 w-[1px] bg-gray-600"></div>
             <button
               class="rounded-full p-1 border border-gray-600"
