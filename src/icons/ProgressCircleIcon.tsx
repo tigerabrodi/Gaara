@@ -1,3 +1,4 @@
+import { createEffect, createSignal } from 'solid-js'
 import {
   MAX_TOTAL_TWEET_CHARACTERS_LENGTH,
   STROKE_BACKGROUND_COLOR,
@@ -7,13 +8,18 @@ import {
   STROKE_WARNING_COLOR,
   MAX_TWEET_SUCCESS_CHARACTERS_LENGTH,
   END_STROKE_DASH_ARRAY,
+  START_STROKE_DASH_ARRAY,
+  INCREMENTAL_STROKE_VALUE_PER_CHARACTER,
 } from '../constants'
 
 export const ProgressCircleIcon = (props: {
   class: string
-  strokeDashArray: number
   tweetValue: string
 }) => {
+  const [strokeDashArray, setStrokeDashArray] = createSignal(
+    START_STROKE_DASH_ARRAY
+  )
+
   const shouldShowSuccessColor = () =>
     props.tweetValue.length < MAX_TWEET_SUCCESS_CHARACTERS_LENGTH
   const shouldShowWarningColor = () =>
@@ -30,7 +36,23 @@ export const ProgressCircleIcon = (props: {
       : STROKE_ERROR_COLOR
 
   const currentStrokeDashArray = () =>
-    shouldShowErrorColor() ? END_STROKE_DASH_ARRAY : props.strokeDashArray
+    shouldShowErrorColor() ? END_STROKE_DASH_ARRAY : strokeDashArray()
+
+  createEffect(() => {
+    const currentTweetValueLength = props.tweetValue.length
+    const isTweetLessThanMaxCharacters =
+      currentTweetValueLength <= MAX_TOTAL_TWEET_CHARACTERS_LENGTH
+
+    if (props.tweetValue && isTweetLessThanMaxCharacters) {
+      const newStrokeDashArrayPerCharacter =
+        currentTweetValueLength * INCREMENTAL_STROKE_VALUE_PER_CHARACTER
+
+      const newStrokeDashArray =
+        newStrokeDashArrayPerCharacter + START_STROKE_DASH_ARRAY
+
+      setStrokeDashArray(newStrokeDashArray)
+    }
+  })
 
   return (
     <svg

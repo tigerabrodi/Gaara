@@ -1,9 +1,4 @@
-import { createEffect, createSignal } from 'solid-js'
-import {
-  INCREMENTAL_STROKE_VALUE_PER_CHARACTER,
-  MAX_TOTAL_TWEET_CHARACTERS_LENGTH,
-  START_STROKE_DASH_ARRAY,
-} from './constants'
+import { createSignal } from 'solid-js'
 import { AddIcon } from './icons/AddIcon'
 import { EmojiIcon } from './icons/EmojiIcon'
 import { GifIcon } from './icons/GifIcon'
@@ -12,25 +7,6 @@ import { ProgressCircleIcon } from './icons/ProgressCircleIcon'
 
 export const App = () => {
   const [tweetValue, setTweetValue] = createSignal('')
-  const [strokeDashArray, setStrokeDashArray] = createSignal(
-    START_STROKE_DASH_ARRAY
-  )
-
-  createEffect(() => {
-    const currentTweetValueLength = tweetValue().length
-    const isTweetLessThanMaxCharacters =
-      currentTweetValueLength <= MAX_TOTAL_TWEET_CHARACTERS_LENGTH
-
-    if (tweetValue() && isTweetLessThanMaxCharacters) {
-      const newStrokeDashArrayPerCharacter =
-        currentTweetValueLength * INCREMENTAL_STROKE_VALUE_PER_CHARACTER
-
-      const newStrokeDashArray =
-        newStrokeDashArrayPerCharacter + START_STROKE_DASH_ARRAY
-
-      setStrokeDashArray(newStrokeDashArray)
-    }
-  })
 
   return (
     <main class="w-full min-h-full flex flex-col items-center bg-white">
@@ -76,7 +52,6 @@ export const App = () => {
             {tweetValue() ? (
               <ProgressCircleIcon
                 class="w-5 h-5 -rotate-90"
-                strokeDashArray={strokeDashArray()}
                 tweetValue={tweetValue()}
               />
             ) : (
