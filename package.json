@@ -23,6 +23,7 @@
     "vite-plugin-solid": "^2.3.0"
   },
   "dependencies": {
+    "solid-emoji-picker": "^0.1.2",
     "solid-js": "^1.4.7"
   }
 }

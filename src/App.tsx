@@ -1,4 +1,7 @@
-import { createSignal, Show } from 'solid-js'
+import type { Emoji } from 'solid-emoji-picker'
+
+import { EmojiPicker } from 'solid-emoji-picker'
+import { createSignal, Show, Suspense } from 'solid-js'
 
 import { ImageUpload } from './components/ImageUpload'
 import { ProgressCircle } from './components/ProgressCircle'
@@ -14,6 +17,7 @@ type FileInputEvent = Event & {
 export const App = () => {
   const [tweetValue, setTweetValue] = createSignal('')
   const [avatarUrl, setAvatarUrl] = createSignal('')
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = createSignal(false)
 
   const onFileChange = (event: FileInputEvent) => {
     const file = event.target.files ? event.target.files[0] : null
@@ -25,10 +29,14 @@ export const App = () => {
     setAvatarUrl(window.URL.createObjectURL(file))
   }
 
+  function pickEmoji(emoji: Emoji) {
+    setTweetValue((tweetValue) => tweetValue + emoji.emoji)
+  }
+
   return (
     <main class="w-full min-h-full flex flex-col items-center bg-white">
       <h1 class="mt-12 text-navy text-6xl">Tweet UI</h1>
-      <div class="bg-navy w-[600px] min-h-[280px] p-4 pt-5 rounded-xl shadow-sm shadow-gray-600 mt-8">
+      <div class="bg-navy w-[600px] min-h-[280px] p-4 pt-5 rounded-xl shadow-sm shadow-gray-600 mt-8 relative">
         <div class="grid-template-area-styles min-h-[250px]">
           <img
             src="/src/assets/naruto.jpg"
@@ -70,6 +78,7 @@ export const App = () => {
             <button
               aria-label="Add Emoji"
               class="w-9 h-9 items-center justify-center flex hover:cursor-pointer rounded-full hover:bg-blue-300 transition-all"
+              onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen())}
             >
               <EmojiIcon class="w-5 h-5 fill-blue-600" />
             </button>
@@ -92,6 +101,12 @@ export const App = () => {
             </button>
           </div>
         </div>
+
+        <Suspense fallback={<></>}>
+          <Show when={isEmojiPickerOpen()}>
+            <EmojiPicker onEmojiClick={pickEmoji} skinTone="medium" />
+          </Show>
+        </Suspense>
       </div>
     </main>
   )
