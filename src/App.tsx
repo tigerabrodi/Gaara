@@ -4,7 +4,6 @@ import { ImageUpload } from './components/ImageUpload'
 import { ProgressCircle } from './components/ProgressCircle'
 import { AddIcon } from './icons/AddIcon'
 import { EmojiIcon } from './icons/EmojiIcon'
-import { GifIcon } from './icons/GifIcon'
 import { ImageIcon } from './icons/ImageIcon'
 
 type FileInputEvent = Event & {
@@ -68,12 +67,6 @@ export const App = () => {
             >
               <ImageIcon class="w-5 h-5 fill-blue-600" />
             </label>
-            <button
-              aria-label="Add Gif"
-              class="w-9 h-9 items-center justify-center flex hover:cursor-pointer rounded-full hover:bg-blue-300 transition-all"
-            >
-              <GifIcon class="w-5 h-5 fill-blue-600" />
-            </button>
             <button
               aria-label="Add Emoji"
               class="w-9 h-9 items-center justify-center flex hover:cursor-pointer rounded-full hover:bg-blue-300 transition-all"
