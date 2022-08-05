@@ -23,6 +23,8 @@
     "vite-plugin-solid": "^2.3.0"
   },
   "dependencies": {
+    "@picmo/popup-picker": "^5.4.0",
+    "picmo": "^5.4.1",
     "solid-js": "^1.4.7"
   }
 }

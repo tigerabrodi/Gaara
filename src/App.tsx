@@ -1,4 +1,8 @@
-import { createSignal, Show } from 'solid-js'
+import type { PopupPickerController } from '@picmo/popup-picker'
+
+import { createPopup } from '@picmo/popup-picker'
+import { darkTheme } from 'picmo'
+import { createEffect, createSignal, onCleanup, Show } from 'solid-js'
 
 import { ImageUpload } from './components/ImageUpload'
 import { ProgressCircle } from './components/ProgressCircle'
@@ -15,6 +19,11 @@ export const App = () => {
   const [tweetValue, setTweetValue] = createSignal('')
   const [avatarUrl, setAvatarUrl] = createSignal('')
 
+  let emojiPickerElement: HTMLButtonElement
+  let emojiPickerContainerElement: HTMLDivElement
+  const [emojiPicker, setEmojiPicker] =
+    createSignal<PopupPickerController | null>(null)
+
   const onFileChange = (event: FileInputEvent) => {
     const file = event.target.files ? event.target.files[0] : null
 
@@ -24,6 +33,38 @@ export const App = () => {
 
     setAvatarUrl(window.URL.createObjectURL(file))
   }
+
+  function handleEmojiSelect(event: Event & { emoji: string }) {
+    setTweetValue((tweetValue) => `${tweetValue} ${event.emoji}`)
+  }
+
+  createEffect(() => {
+    console.log(
+      emojiPicker(),
+      emojiPickerContainerElement,
+      emojiPickerElement,
+      emojiPicker()?.isOpen,
+      emojiPicker()?.picker
+    )
+    if (!emojiPicker && emojiPickerElement) {
+      const picker = createPopup(
+        { theme: darkTheme, rootElement: emojiPickerContainerElement },
+        {
+          triggerElement: emojiPickerElement,
+          referenceElement: emojiPickerElement,
+          position: 'right-start',
+        }
+      )
+
+      picker.addEventListener('emoji:select', handleEmojiSelect)
+
+      setEmojiPicker(picker)
+    }
+  })
+
+  onCleanup(() =>
+    emojiPicker()?.removeEventListener('emoji:select', handleEmojiSelect)
+  )
 
   return (
     <main class="w-full min-h-full flex flex-col items-center bg-white">
@@ -70,10 +111,18 @@ export const App = () => {
             <button
               aria-label="Add Emoji"
               class="w-9 h-9 items-center justify-center flex hover:cursor-pointer rounded-full hover:bg-blue-300 transition-all"
+              onClick={() => {
+                console.log('ON CLICK HAS BEEN TRIGGERED')
+                emojiPicker()?.toggle()
+              }}
+              type="button"
+              ref={emojiPickerElement}
             >
               <EmojiIcon class="w-5 h-5 fill-blue-600" />
             </button>
           </div>
+
+          <div ref={emojiPickerContainerElement} class="w-10 h-10" />
 
           <div class="[grid-area:action-buttons] flex flex-row items-center mt-1 h-full w-full justify-between">
             <Show when={tweetValue()} fallback={<div class="w-5 h-5" />}>
