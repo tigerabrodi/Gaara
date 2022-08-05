@@ -1,4 +1,5 @@
-import { Setter } from 'solid-js'
+import type { Setter } from 'solid-js'
+
 import { CloseIcon } from '../icons/CloseIcon'
 
 export const ImageUpload = (props: {

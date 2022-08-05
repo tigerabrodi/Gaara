@@ -1,4 +1,5 @@
 import { createEffect, createSignal } from 'solid-js'
+
 import {
   MAX_TOTAL_TWEET_CHARACTERS_LENGTH,
   STROKE_ERROR_COLOR,

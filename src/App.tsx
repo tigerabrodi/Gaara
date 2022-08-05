@@ -1,10 +1,11 @@
 import { createSignal, Show } from 'solid-js'
+
+import { ImageUpload } from './components/ImageUpload'
+import { ProgressCircle } from './components/ProgressCircle'
 import { AddIcon } from './icons/AddIcon'
 import { EmojiIcon } from './icons/EmojiIcon'
 import { GifIcon } from './icons/GifIcon'
 import { ImageIcon } from './icons/ImageIcon'
-import { ProgressCircle } from './components/ProgressCircle'
-import { ImageUpload } from './components/ImageUpload'
 
 type FileInputEvent = Event & {
   currentTarget: HTMLInputElement
