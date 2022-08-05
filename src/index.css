@@ -56,4 +56,37 @@
     border-radius: 6px;
     @apply border-solid border-4 border-gray-300;
   }
+
+  /* emoji styles */
+  .emoji-picker {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    width: 300px;
+    height: 320px;
+    overflow: auto;
+    top: 100%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    box-shadow: -3px 6px 5.5rem rgb(29 155 240 / 10%);
+    @apply bg-navy rounded-lg p-2;
+  }
+
+  .emoji-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+  }
+
+  .emoji-section-title {
+    @apply text-blue-600 mt-1 font-bold text-lg;
+  }
+
+  .emoji-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
 }
