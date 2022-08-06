@@ -66,7 +66,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
   const lastTweetInput = tweets[tweets.length - 1]
   const shouldShowAddThreadButton = () => lastTweetInput.id === props.tweet.id
 
-  const isVisible = () => props.tweet.isVisible
+  const isCurrentTweetInputVisible = () => props.tweet.isVisible
 
   const handleVisiblityOfTweetInput = () => {
     // Only one visible tweet input at the time.
@@ -79,7 +79,9 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
   return (
     <div
       class={`grid-template-area-styles ${
-        isVisible() ? 'min-h-[250px] opacity-100' : 'h-16 opacity-70'
+        isCurrentTweetInputVisible()
+          ? 'min-h-[250px] opacity-100'
+          : 'h-16 opacity-70'
       }`}
     >
       <img
@@ -89,12 +91,14 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
       />
       <div
         class={`flex w-full flex-col items-center border-b border-b-gray-600 pt-3 pb-2 [grid-area:text-image] ${
-          isVisible() ? 'min-h-[180px]' : 'h-16'
+          isCurrentTweetInputVisible() ? 'min-h-[180px]' : 'h-16'
         }`}
       >
         <textarea
           class={`w-full resize-none overflow-auto bg-navy pl-2 pr-1 text-xl text-white placeholder:text-opacity-50 ${
-            isVisible() ? 'min-h-[180px] opacity-100' : 'h-16 opacity-50'
+            isCurrentTweetInputVisible()
+              ? 'min-h-[180px] opacity-100'
+              : 'h-16 opacity-50'
           }`}
           placeholder="What's happening?"
           value={props.tweet.text}
@@ -107,7 +111,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
         </Show>
       </div>
 
-      <Show when={isVisible()} fallback={<div />}>
+      <Show when={isCurrentTweetInputVisible()} fallback={<div />}>
         <div class="mt-1 flex h-full w-full flex-row items-center [grid-area:media-buttons] [column-gap:16px]">
           <input
             id="upload-image"
