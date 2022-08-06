@@ -35,6 +35,18 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
     setTweets(props.tweet.id, { text: props.tweet.text + emoji.emoji })
   }
 
+  const toggleEmojiPicker = () => setIsEmojiPickerOpen(!isEmojiPickerOpen())
+
+  const handleChange = (
+    event: InputEvent & {
+      target: HTMLTextAreaElement
+      currentTarget: HTMLTextAreaElement
+    }
+  ) =>
+    setTweets(props.tweet.id, {
+      text: event.target.value,
+    })
+
   return (
     <div class="bg-navy w-[600px] min-h-[280px] p-4 pt-5 rounded-xl shadow-sm shadow-gray-600 mt-8 relative">
       <div class="grid-template-area-styles min-h-[250px]">
@@ -48,11 +60,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
             class="bg-navy text-xl text-white placeholder:text-opacity-50 min-h-[180px] w-full pl-2 pr-1 resize-none  overflow-auto"
             placeholder="What's happening?"
             value={props.tweet.text}
-            onInput={(event) =>
-              setTweets(props.tweet.id, {
-                text: (event.target as HTMLInputElement).value,
-              })
-            }
+            onInput={handleChange}
           />
           <Show when={props.tweet.imageUrl}>
             <ImageUpload avatarUrl={props.tweet.imageUrl} tweet={props.tweet} />
@@ -77,7 +85,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
           <button
             aria-label="Add Emoji"
             class="w-9 h-9 items-center justify-center flex hover:cursor-pointer rounded-full hover:bg-blue-300 transition-all"
-            onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen())}
+            onClick={toggleEmojiPicker}
           >
             <EmojiIcon class="w-5 h-5 fill-blue-600" />
           </button>
