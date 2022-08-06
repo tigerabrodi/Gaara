@@ -4,6 +4,7 @@ import type { Emoji } from 'solid-emoji-picker'
 import { EmojiPicker } from 'solid-emoji-picker'
 import { createSignal, Show, Suspense } from 'solid-js'
 
+import NarutoImg from '../assets/naruto.jpg'
 import { AddIcon } from '../icons/AddIcon'
 import { EmojiIcon } from '../icons/EmojiIcon'
 import { ImageIcon } from '../icons/ImageIcon'
@@ -85,7 +86,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
       }`}
     >
       <img
-        src="/naruto.jpg"
+        src={NarutoImg}
         alt="Naruto"
         class="h-12 w-12 rounded-full object-cover object-top [grid-area:img]"
       />
