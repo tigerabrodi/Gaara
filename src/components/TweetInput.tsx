@@ -79,22 +79,22 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
   return (
     <div
       class={`grid-template-area-styles ${
-        isVisible() ? 'opacity-100 min-h-[250px]' : 'opacity-70 h-16'
+        isVisible() ? 'min-h-[250px] opacity-100' : 'h-16 opacity-70'
       }`}
     >
       <img
         src="/src/assets/naruto.jpg"
         alt="Naruto"
-        class="[grid-area:img] rounded-full object-top object-cover w-12 h-12"
+        class="h-12 w-12 rounded-full object-cover object-top [grid-area:img]"
       />
       <div
-        class={`[grid-area:text-image] w-full border-b-gray-600 border-b pt-3 pb-2 flex flex-col items-center ${
+        class={`flex w-full flex-col items-center border-b border-b-gray-600 pt-3 pb-2 [grid-area:text-image] ${
           isVisible() ? 'min-h-[180px]' : 'h-16'
         }`}
       >
         <textarea
-          class={`bg-navy text-xl text-white placeholder:text-opacity-50 w-full pl-2 pr-1 resize-none overflow-auto ${
-            isVisible() ? 'opacity-100 min-h-[180px]' : 'opacity-50 h-16'
+          class={`w-full resize-none overflow-auto bg-navy pl-2 pr-1 text-xl text-white placeholder:text-opacity-50 ${
+            isVisible() ? 'min-h-[180px] opacity-100' : 'h-16 opacity-50'
           }`}
           placeholder="What's happening?"
           value={props.tweet.text}
@@ -108,7 +108,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
       </div>
 
       <Show when={isVisible()} fallback={<div />}>
-        <div class="[grid-area:media-buttons] flex flex-row items-center [column-gap:16px] mt-1 h-full w-full">
+        <div class="mt-1 flex h-full w-full flex-row items-center [grid-area:media-buttons] [column-gap:16px]">
           <input
             id="upload-image"
             class="sr-only"
@@ -119,39 +119,39 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
           />
           <label
             for="upload-image"
-            class="w-9 h-9 items-center justify-center flex hover:cursor-pointer rounded-full hover:bg-blue-300 transition-all"
+            class="flex h-9 w-9 items-center justify-center rounded-full transition-all hover:cursor-pointer hover:bg-blue-300"
           >
-            <ImageIcon class="w-5 h-5 fill-blue-600" />
+            <ImageIcon class="h-5 w-5 fill-blue-600" />
           </label>
           <button
             aria-label="Add Emoji"
-            class="w-9 h-9 items-center justify-center flex hover:cursor-pointer rounded-full hover:bg-blue-300 transition-all"
+            class="flex h-9 w-9 items-center justify-center rounded-full transition-all hover:cursor-pointer hover:bg-blue-300"
             onClick={toggleEmojiPicker}
           >
-            <EmojiIcon class="w-5 h-5 fill-blue-600" />
+            <EmojiIcon class="h-5 w-5 fill-blue-600" />
           </button>
         </div>
 
-        <div class="[grid-area:action-buttons] flex flex-row items-center mt-1 h-full w-full justify-between">
-          <Show when={props.tweet.text} fallback={<div class="w-5 h-5" />}>
+        <div class="mt-1 flex h-full w-full flex-row items-center justify-between [grid-area:action-buttons]">
+          <Show when={props.tweet.text} fallback={<div class="h-5 w-5" />}>
             <ProgressCircle tweetValue={props.tweet.text} />
           </Show>
           <div class="h-3/5 w-[1px] bg-gray-600"></div>
 
           <Show
             when={shouldShowAddThreadButton()}
-            fallback={<div class="w-9 h-9" />}
+            fallback={<div class="h-9 w-9" />}
           >
             <button
-              class="rounded-full p-1 border border-gray-600"
+              class="rounded-full border border-gray-600 p-1"
               aria-label="Add thread"
               onClick={addNewThread}
             >
-              <AddIcon class="w-4 h-4 fill-blue-600" />
+              <AddIcon class="h-4 w-4 fill-blue-600" />
             </button>
           </Show>
 
-          <button class="bg-blue-600 text-white rounded-2xl px-3 py-1 font-semibold">
+          <button class="rounded-2xl bg-blue-600 px-3 py-1 font-semibold text-white">
             Tweet
           </button>
         </div>

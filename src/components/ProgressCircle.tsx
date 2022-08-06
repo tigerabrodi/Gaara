@@ -93,7 +93,7 @@ export const ProgressCircle = (props: { tweetValue: string }) => {
       />
       <p
         aria-hidden="true"
-        class={`${displayOfNumberValidation()} text-gray-300 font-medium absolute text-sm -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2`}
+        class={`${displayOfNumberValidation()} absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-sm font-medium text-gray-300`}
       >
         {warningErrorText()}
       </p>

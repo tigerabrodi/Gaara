@@ -10,18 +10,18 @@ export const ImageUpload = (props: {
   const handleImageRemoval = () => setTweets(props.tweet.id, { imageUrl: '' })
 
   return (
-    <div class="w-full h-96 mt-2 relative">
+    <div class="relative mt-2 h-96 w-full">
       <img
         src={props.avatarUrl}
         alt=""
-        class="rounded-3xl object-top object-cover w-full h-full"
+        class="h-full w-full rounded-3xl object-cover object-top"
       />
       <button
         onClick={handleImageRemoval}
         aria-label="Remove image"
-        class="w-8 h-8 flex items-center justify-center rounded-full absolute top-2 shadow-md shadow-black-300 left-2 bg-black-600 hover:bg-black-300 transition-all"
+        class="absolute top-2 left-2 flex h-8 w-8 items-center justify-center rounded-full bg-black-600 shadow-md shadow-black-300 transition-all hover:bg-black-300"
       >
-        <CloseIcon class="w-4 h-4 fill-white" />
+        <CloseIcon class="h-4 w-4 fill-white" />
       </button>
     </div>
   )
