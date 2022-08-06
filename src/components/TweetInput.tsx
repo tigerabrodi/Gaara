@@ -85,7 +85,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
       }`}
     >
       <img
-        src="/src/assets/naruto.jpg"
+        src="/naruto.jpg"
         alt="Naruto"
         class="h-12 w-12 rounded-full object-cover object-top [grid-area:img]"
       />
