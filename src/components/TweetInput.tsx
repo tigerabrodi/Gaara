@@ -7,6 +7,7 @@ import { createSignal, Show, Suspense } from 'solid-js'
 import { AddIcon } from '../icons/AddIcon'
 import { EmojiIcon } from '../icons/EmojiIcon'
 import { ImageIcon } from '../icons/ImageIcon'
+import { tweets } from '../store'
 import { setTweets } from '../store'
 import { ImageUpload } from './ImageUpload'
 import { ProgressCircle } from './ProgressCircle'
@@ -47,6 +48,14 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
       text: event.target.value,
     })
 
+  const addNewThread = () => {
+    const newId = props.tweet.id + 1
+
+    setTweets(newId, { id: newId, text: '', imageUrl: '' })
+  }
+
+  const isLastThread = () => tweets[tweets.length - 1].id === props.tweet.id
+
   return (
     <div class="bg-navy w-[600px] min-h-[280px] p-4 pt-5 rounded-xl shadow-sm shadow-gray-600 mt-8 relative">
       <div class="grid-template-area-styles min-h-[250px]">
@@ -82,13 +91,15 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
           >
             <ImageIcon class="w-5 h-5 fill-blue-600" />
           </label>
-          <button
-            aria-label="Add Emoji"
-            class="w-9 h-9 items-center justify-center flex hover:cursor-pointer rounded-full hover:bg-blue-300 transition-all"
-            onClick={toggleEmojiPicker}
-          >
-            <EmojiIcon class="w-5 h-5 fill-blue-600" />
-          </button>
+          <Show when={isLastThread()} fallback={<div class="w-9 h-9" />}>
+            <button
+              aria-label="Add Emoji"
+              class="w-9 h-9 items-center justify-center flex hover:cursor-pointer rounded-full hover:bg-blue-300 transition-all"
+              onClick={toggleEmojiPicker}
+            >
+              <EmojiIcon class="w-5 h-5 fill-blue-600" />
+            </button>
+          </Show>
         </div>
 
         <div class="[grid-area:action-buttons] flex flex-row items-center mt-1 h-full w-full justify-between">
@@ -99,6 +110,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
           <button
             class="rounded-full p-1 border border-gray-600"
             aria-label="Add thread"
+            onClick={addNewThread}
           >
             <AddIcon class="w-4 h-4 fill-blue-600" />
           </button>
