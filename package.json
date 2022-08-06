@@ -7,13 +7,17 @@
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .tsx,.jsx,.js,.ts --ignore-path .gitignore src",
-    "lint-fix": "eslint --ext .tsx,.jsx,.js,.ts --ignore-path .gitignore --fix src"
+    "lint-fix": "eslint --ext .tsx,.jsx,.js,.ts --ignore-path .gitignore --fix src",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
   },
   "license": "MIT",
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.3",
     "@types/tailwindcss": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "autoprefixer": "^10.4.7",
+    "cypress": "^10.4.0",
     "eslint": "^8.20.0",
     "eslint-plugin-import": "^2.26.0",
     "postcss": "^8.4.14",
