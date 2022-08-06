@@ -102,6 +102,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
               : 'h-16 opacity-50'
           }`}
           placeholder="What's happening?"
+          aria-label="Enter tweet text"
           value={props.tweet.text}
           onInput={handleTextChange}
           id={`textarea-${props.tweet.id}`}
