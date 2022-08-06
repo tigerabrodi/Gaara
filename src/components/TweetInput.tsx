@@ -17,13 +17,18 @@ type FileInputEvent = Event & {
   target: HTMLInputElement
 }
 
+type TextareaEvent = InputEvent & {
+  target: HTMLTextAreaElement
+  currentTarget: HTMLTextAreaElement
+}
+
 export const TweetInput = (props: { tweet: TweetInputType }) => {
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = createSignal(false)
 
   const onFileChange = (event: FileInputEvent) => {
     const file = event.target.files ? event.target.files[0] : null
     if (!file) {
-      throw new Error('You must upload a file...')
+      throw new Error('You must upload a image...')
     }
 
     const imageUrl = window.URL.createObjectURL(file)
@@ -36,12 +41,7 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
 
   const toggleEmojiPicker = () => setIsEmojiPickerOpen(!isEmojiPickerOpen())
 
-  const handleTextChange = (
-    event: InputEvent & {
-      target: HTMLTextAreaElement
-      currentTarget: HTMLTextAreaElement
-    }
-  ) => {
+  const handleTextChange = (event: TextareaEvent) => {
     setTweets(props.tweet.id, {
       text: event.target.value,
     })
@@ -56,13 +56,15 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
 
     setTweets(newId, { id: newId, text: '', imageUrl: '', isVisible: true })
 
+    const textareaElementId = `#textarea-${newId}`
     const textareaElement = document.querySelector(
-      `#textarea-${newId}`
+      textareaElementId
     ) as HTMLTextAreaElement
     textareaElement.focus()
   }
 
-  const isLastTweetInput = () => tweets[tweets.length - 1].id === props.tweet.id
+  const lastTweetInput = tweets[tweets.length - 1]
+  const shouldShowAddThreadButton = () => lastTweetInput.id === props.tweet.id
 
   const isVisible = () => props.tweet.isVisible
 
@@ -136,7 +138,10 @@ export const TweetInput = (props: { tweet: TweetInputType }) => {
           </Show>
           <div class="h-3/5 w-[1px] bg-gray-600"></div>
 
-          <Show when={isLastTweetInput()} fallback={<div class="w-9 h-9" />}>
+          <Show
+            when={shouldShowAddThreadButton()}
+            fallback={<div class="w-9 h-9" />}
+          >
             <button
               class="rounded-full p-1 border border-gray-600"
               aria-label="Add thread"
